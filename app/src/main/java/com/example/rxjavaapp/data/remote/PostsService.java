@@ -1,6 +1,7 @@
-package com.example.rxjavaapp.model;
+package com.example.rxjavaapp.data.remote;
 
 import com.example.rxjavaapp.di.DaggerApiComponent;
+import com.example.rxjavaapp.model.PostModel;
 
 import java.util.List;
 import javax.inject.Inject;

@@ -1,7 +1,7 @@
 package com.example.rxjavaapp.di;
 
-import com.example.rxjavaapp.model.PostsApi;
-import com.example.rxjavaapp.model.PostsService;
+import com.example.rxjavaapp.data.remote.PostsApi;
+import com.example.rxjavaapp.data.remote.PostsService;
 
 import dagger.Module;
 import dagger.Provides;

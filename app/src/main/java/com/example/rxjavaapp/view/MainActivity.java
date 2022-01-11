@@ -1,58 +1,39 @@
 package com.example.rxjavaapp.view;
 
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
-import com.example.rxjavaapp.R;
+import com.example.rxjavaapp.databinding.ActivityMainBinding;
 import com.example.rxjavaapp.viewmodel.ListViewModel;
 
 import java.util.HashMap;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class MainActivity extends AppCompatActivity {
-
-    @BindView(R.id.countryList)
-    RecyclerView countriesList;
-
-    @BindView(R.id.list_error)
-    TextView listError;
-
-    @BindView(R.id.progress_bar)
-    ProgressBar progressBar;
-
-    @BindView(R.id.swipeRefreshLayout)
-    SwipeRefreshLayout swipeRefreshLayout;
-
+    ActivityMainBinding mainBinding;
     private ListViewModel listViewModel;
     private PostsAdapter adapter = new PostsAdapter(new HashMap<>());
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        ButterKnife.bind(this);
+        mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(mainBinding.getRoot());
+
         listViewModel = new ViewModelProvider(this).get(ListViewModel.class);
         listViewModel.refresh();
 
-        countriesList.setLayoutManager(new LinearLayoutManager(this));
-        countriesList.setAdapter(adapter);
+        mainBinding.postRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mainBinding.postRecyclerView.setAdapter(adapter);
 
-        swipeRefreshLayout.setOnRefreshListener(() -> {
+        mainBinding.swipeRefreshLayout.setOnRefreshListener(() -> {
             listViewModel.refresh();
-            swipeRefreshLayout.setRefreshing(false);
+            mainBinding.swipeRefreshLayout.setRefreshing(false);
         });
         
         observerViewModel();
@@ -61,21 +42,21 @@ public class MainActivity extends AppCompatActivity {
     private void observerViewModel() {
         listViewModel.countries.observe(this, countryModels -> {
             if(countryModels != null){
-                countriesList.setVisibility(View.VISIBLE);
+                mainBinding.postRecyclerView.setVisibility(View.VISIBLE);
                 adapter.updateCountries(countryModels);
             }
         });
         listViewModel.countryLoadError.observe(this, isError -> {
            if(isError != null){
-               listError.setVisibility(isError ? View.VISIBLE : View.GONE);
+               mainBinding.listError.setVisibility(isError ? View.VISIBLE : View.GONE);
            }
         });
         listViewModel.loading.observe(this, isLoading -> {
             if(isLoading != null){
-                progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+                mainBinding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
                 if(isLoading){
-                    listError.setVisibility(View.GONE);
-                    countriesList.setVisibility(View.GONE);
+                    mainBinding.listError.setVisibility(View.GONE);
+                    mainBinding.postRecyclerView.setVisibility(View.GONE);
                 }
             }
         });

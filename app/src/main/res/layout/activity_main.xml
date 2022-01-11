@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/countryList"
+            android:id="@+id/postRecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:paddingBottom="12dp"
@@ -29,7 +29,7 @@
             android:gravity="center"
             android:text="An error has occurred while loading the data"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/countryList"
+            app:layout_constraintBottom_toBottomOf="@+id/postRecyclerView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
