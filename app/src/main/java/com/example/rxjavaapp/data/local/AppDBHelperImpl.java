@@ -30,8 +30,8 @@ public class AppDBHelperImpl implements AppDbHelper {
     }
 
     @Override
-    public Flowable<List<Post>> getAllPost() {
-         return postsDAO.getAllPosts();
+    public Flowable<List<Post>> getPostsFromLocal() {
+        return null;
     }
 
     @Override

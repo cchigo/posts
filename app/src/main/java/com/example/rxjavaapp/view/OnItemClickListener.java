@@ -1,8 +1,10 @@
 package com.example.rxjavaapp.view;
 
-import com.example.rxjavaapp.data.local.Post;
-import com.example.rxjavaapp.data.local.PostItem;
+
+import com.example.rxjavaapp.model.PostModel;
+
+import java.util.ArrayList;
 
 public interface OnItemClickListener {
-    void onItemClick(PostItem item);
+    void onItemClick(ArrayList<PostModel> item);
 }

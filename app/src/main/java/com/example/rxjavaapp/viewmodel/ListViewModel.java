@@ -1,6 +1,7 @@
 package com.example.rxjavaapp.viewmodel;
 
 import android.app.Application;
+import android.widget.Toast;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -9,7 +10,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.rxjavaapp.data.local.AppDBHelperImpl;
 import com.example.rxjavaapp.data.local.AppDatabase;
 import com.example.rxjavaapp.data.local.Post;
-import com.example.rxjavaapp.data.local.PostItem;
 import com.example.rxjavaapp.data.local.PostsDAO;
 import com.example.rxjavaapp.di.DaggerApiComponent;
 import com.example.rxjavaapp.model.PostModel;
@@ -26,17 +26,23 @@ import javax.inject.Inject;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.functions.Action;
+import io.reactivex.rxjava3.functions.Consumer;
+import io.reactivex.rxjava3.observers.DisposableCompletableObserver;
 import io.reactivex.rxjava3.observers.DisposableSingleObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 public class ListViewModel extends AndroidViewModel {
- //   private PostsRepository postsRepository;
+    //   private PostsRepository postsRepository;
     public MutableLiveData<Map<String, ArrayList<PostModel>>> _posts = new MutableLiveData();
     public LiveData<Map<String, ArrayList<PostModel>>> posts = _posts;
 
-    public MutableLiveData<List<Post>> _userPosts = new MutableLiveData();
-    public LiveData<List<Post>> userPosts = _userPosts;
+    public MutableLiveData<List<Post>> _userPostsLocal = new MutableLiveData();
+    public LiveData<List<Post>> userPostsLocal = _userPostsLocal;
+
+    public MutableLiveData<ArrayList<PostModel>> _userPosts = new MutableLiveData();
+    public LiveData<ArrayList<PostModel>> userPosts = _userPosts;
 
     public MutableLiveData<Boolean> loadingError = new MutableLiveData<Boolean>();
     public MutableLiveData<Boolean> loading = new MutableLiveData<Boolean>();
@@ -47,8 +53,6 @@ public class ListViewModel extends AndroidViewModel {
     AppDBHelperImpl appDBHelper;
 
 
-
-
     @Inject
     public PostsService postsService;
 
@@ -57,10 +61,11 @@ public class ListViewModel extends AndroidViewModel {
         this.application = application;
 
         appDatabase = AppDatabase.getInstance(application);
-    //    postsRepository=new PostsRepository(application);
+        //    postsRepository=new PostsRepository(application);
         postsDAO = appDatabase.getPostsDAO();
         appDBHelper = new AppDBHelperImpl(postsDAO);
         DaggerApiComponent.create().inject(this);
+        fetchPosts();
     }
 
     private CompositeDisposable disposable = new CompositeDisposable();
@@ -99,11 +104,11 @@ public class ListViewModel extends AndroidViewModel {
                                 List<Post> copy = new ArrayList();
                                 for (PostModel post : postModel) {
                                     copy.add(new Post(0,
-                                            post.getUserId(),
-                                            post.getId(),
-                                            post.getTitle(),
-                                            post.getBody(),
-                                            false
+                                                    post.getUserId(),
+                                                    post.getId(),
+                                                    post.getTitle(),
+                                                    post.getBody(),
+                                                    false
                                             )
                                     );
                                 }
@@ -132,12 +137,48 @@ public class ListViewModel extends AndroidViewModel {
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }
-    public void openPost(PostItem postItem){
 
+    public void readFromLocal() {
+        disposable.add(appDBHelper.getPostsFromLocal()
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<Post>>() {
+                               @Override
+                               public void accept(List<Post> posts) throws Throwable {
+                                   _userPostsLocal.setValue(posts);
+
+                               }
+                           }
+                )
+        );
     }
 
-    private void addToFavouriteDB() {
+    private void updateFavourite(Post post) {
+//        appDBHelper.updatePost(post)
+        disposable.add( Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+
+                appDBHelper.updatePost(post);
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+                  //change to favourite
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                        Toast.makeText(application.getApplicationContext()," error occurred ", Toast.LENGTH_LONG).show();
+
+                    }
+                }));
     }
+
 //private void
 
     @Override

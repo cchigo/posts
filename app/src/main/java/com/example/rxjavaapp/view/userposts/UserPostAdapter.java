@@ -7,17 +7,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rxjavaapp.data.local.Post;
-import com.example.rxjavaapp.data.local.PostItem;
 import com.example.rxjavaapp.databinding.UserPostsItemBinding;
 import com.example.rxjavaapp.model.PostModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.UserPostsViewHolder> {
-    private PostItem postItem;
+    private ArrayList<PostModel> postItem;
 
-    public UserPostAdapter(PostItem posts) {
-        this.postItem = posts;
+    public UserPostAdapter(ArrayList<PostModel> postItem) {
+        this.postItem = postItem;
     }
 
     class UserPostsViewHolder extends RecyclerView.ViewHolder {
@@ -31,10 +31,10 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.UserPo
 
         }
 
-        void bind(Post postItem) {
-           userPostItemBinding.userIdText.setText(postItem.getUserId());
-            userPostItemBinding.postTitleText.setText(postItem.getTitle());
-            userPostItemBinding.postBodyText.setText(postItem.getBody());
+        void bind(PostModel postModel) {
+           userPostItemBinding.userIdText.setText(postModel.getUserId());
+            userPostItemBinding.postTitleText.setText(postModel.getTitle());
+            userPostItemBinding.postBodyText.setText(postModel.getBody());
             userPostItemBinding.postItemLayout.setOnClickListener(v -> {
              //   listener.onItemClick(postItem);
             });
@@ -50,7 +50,7 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.UserPo
 
     @Override
     public void onBindViewHolder(@NonNull UserPostsViewHolder holder, int position) {
-     List<PostModel> post = postItem.getPosts();
+     PostModel post = postItem.get(position);
         holder.bind(post);
     }
 
@@ -58,6 +58,6 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.UserPo
 
     @Override
     public int getItemCount() {
-        return userPosts.size();
+        return postItem.size();
     }
 }

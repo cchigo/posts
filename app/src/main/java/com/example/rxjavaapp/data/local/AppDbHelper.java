@@ -13,7 +13,7 @@ public interface AppDbHelper {
 
     public  void deletePost(Post post);
 
-    public Flowable<List<Post>> getAllPost();
+    public Flowable<List<Post>> getPostsFromLocal();
 
     public  void updatePost(Post post);
 

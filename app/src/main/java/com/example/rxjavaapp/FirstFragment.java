@@ -11,8 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
-import com.example.rxjavaapp.data.local.PostItem;
 import com.example.rxjavaapp.databinding.FragmentFirstBinding;
 import com.example.rxjavaapp.view.OnItemClickListener;
 import com.example.rxjavaapp.view.PostsAdapter;
@@ -41,10 +39,10 @@ public class FirstFragment extends Fragment {
         listViewModel = new ViewModelProvider(requireActivity()).get(ListViewModel.class);
 
         adapter = new PostsAdapter(new HashMap<>(), item -> {
-
+            listViewModel._userPosts.setValue(item);
             NavHostFragment.findNavController(FirstFragment.this)
                    .navigate(R.id.action_FirstFragment_to_SecondFragment);
-            listViewModel._userPosts.setValue(item.getPosts());
+
         });
 
 

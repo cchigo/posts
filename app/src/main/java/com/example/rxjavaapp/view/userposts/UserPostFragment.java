@@ -9,13 +9,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.rxjavaapp.data.local.PostItem;
 import com.example.rxjavaapp.databinding.FragmentSecondBinding;
+import com.example.rxjavaapp.model.PostModel;
 import com.example.rxjavaapp.view.PostsAdapter;
 import com.example.rxjavaapp.viewmodel.ListViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserPostFragment extends Fragment {
@@ -31,16 +32,8 @@ public class UserPostFragment extends Fragment {
     ) {
         binding = FragmentSecondBinding.inflate(inflater, container, false);
         listViewModel = new ViewModelProvider(requireActivity()).get(ListViewModel.class);
-        listViewModel.userPosts.observe(getViewLifecycleOwner(), postItem -> {
-            Log.d("SECOND_TAG_1", postItem.toString());
-           // List<PostItem> list = postItem;
-            adapter = new UserPostAdapter(postItem);
-//            if (postItem != null) {
-//                Log.d("SECOND_TAG", "onViewCreated: " );
-//
-//            }
-        });
-
+        ArrayList<PostModel> postItem = listViewModel.userPosts.getValue();
+        adapter = new UserPostAdapter(postItem);
 
         return binding.getRoot();
 
@@ -48,7 +41,8 @@ public class UserPostFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        binding.userPostsRV.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.userPostsRV.setAdapter(adapter);
 //        binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
