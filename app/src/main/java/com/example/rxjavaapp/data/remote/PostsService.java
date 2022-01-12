@@ -1,10 +1,11 @@
 package com.example.rxjavaapp.data.remote;
-
 import com.example.rxjavaapp.di.DaggerApiComponent;
 import com.example.rxjavaapp.model.PostModel;
 
 import java.util.List;
+
 import javax.inject.Inject;
+
 import io.reactivex.rxjava3.core.Single;
 
 public class PostsService {

@@ -7,20 +7,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.rxjavaapp.data.local.AppDatabase;
 import com.example.rxjavaapp.databinding.ActivityMainBinding;
 import com.example.rxjavaapp.viewmodel.ListViewModel;
 
 import java.util.HashMap;
 
+import io.reactivex.disposables.CompositeDisposable;
+
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding mainBinding;
     private ListViewModel listViewModel;
+    private CompositeDisposable disposable=new CompositeDisposable();
     private PostsAdapter adapter = new PostsAdapter(new HashMap<>());
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+     //   BaseApp.getBaseApp().getApiComponent().inject(this);
+
 
         mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mainBinding.getRoot());
@@ -60,5 +67,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    private void addToFav(){
+
     }
 }
