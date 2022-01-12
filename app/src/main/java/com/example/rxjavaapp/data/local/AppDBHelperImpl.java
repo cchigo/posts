@@ -3,7 +3,8 @@ package com.example.rxjavaapp.data.local;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Flowable;
+import io.reactivex.rxjava3.core.Flowable;
+
 
 public class AppDBHelperImpl implements AppDbHelper {
 
@@ -29,7 +30,7 @@ public class AppDBHelperImpl implements AppDbHelper {
     }
 
     @Override
-    public Flowable<List<Post>> getAllPost(Post post) {
+    public Flowable<List<Post>> getAllPost() {
          return postsDAO.getAllPosts();
     }
 

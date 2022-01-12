@@ -17,14 +17,16 @@ public class Post  {
     String title;
     @ColumnInfo(name="body")
     String body;
+    @ColumnInfo(name="is_favourite")
+    Boolean isSelected;
 
-
-    public Post(long post_id, String userId, String id, String title, String body) {
+    public Post(long post_id, String userId, String id, String title, String body, Boolean isSelected) {
         this.post_id = post_id;
         this.userId = userId;
         this.id = id;
         this.title = title;
         this.body = body;
+        this.isSelected = isSelected;
     }
 
     public long getPost_id() {
@@ -67,4 +69,11 @@ public class Post  {
         this.body = body;
     }
 
+    public Boolean getSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(Boolean selected) {
+        isSelected = selected;
+    }
 }

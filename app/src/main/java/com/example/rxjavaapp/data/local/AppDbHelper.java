@@ -2,7 +2,8 @@ package com.example.rxjavaapp.data.local;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
+import io.reactivex.rxjava3.core.Flowable;
+
 
 public interface AppDbHelper {
 
@@ -12,7 +13,7 @@ public interface AppDbHelper {
 
     public  void deletePost(Post post);
 
-    public Flowable<List<Post>> getAllPost(Post post);
+    public Flowable<List<Post>> getAllPost();
 
     public  void updatePost(Post post);
 

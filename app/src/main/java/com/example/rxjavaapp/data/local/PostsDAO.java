@@ -11,7 +11,9 @@ import com.example.rxjavaapp.model.PostModel;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
+import io.reactivex.rxjava3.core.Flowable;
+
+
 @Dao
 public interface PostsDAO {
 
@@ -28,11 +30,15 @@ public interface PostsDAO {
     @Update
     public void changeFavourite(Post post);
 
-//    @Query("select * from contacts")
-//    public List<Contact> getContacts();
-//
+
     @Query("select * from posts")
     Flowable <List<Post>> getAllPosts();
+//where is fav == true
+    //pass in somrthing different
+    //pass in hasmap to adapter to reuse;
+
+//    @Query("select * from contacts")
+//    public List<Contact> getContacts();
 //
 //    @Query("select * from contacts where contact_id ==:contactId")
 //    public Contact getContact(long contactId);

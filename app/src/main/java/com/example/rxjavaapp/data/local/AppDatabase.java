@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.rxjavaapp.model.PostModel;
 
-@Database(entities = {Post.class}, version = 1, exportSchema = true)
+@Database(entities = {Post.class}, version = 2, exportSchema = true)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract PostsDAO getPostsDAO();
 

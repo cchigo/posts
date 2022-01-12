@@ -29,7 +29,7 @@
         android:textSize="12sp"
         android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/fav_btn"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/userIdText"
         app:layout_constraintTop_toBottomOf="@+id/postTitleText" />
 
@@ -41,33 +41,8 @@
         android:textColor="#000000"
         android:textSize="16sp"
         android:textStyle="italic"
-        app:layout_constraintEnd_toStartOf="@+id/fav_btn"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/userIdText"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/fav_btn"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:padding="4dp"
-        android:src="@drawable/ic_favorite_border"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/post_count_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#868686"
-        android:padding="2dp"
-
-        android:text="1000"
-        android:textColor="@color/white"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/fav_btn"
-        app:layout_constraintTop_toBottomOf="@+id/fav_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

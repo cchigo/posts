@@ -2,7 +2,6 @@ package com.example.rxjavaapp.di;
 
 //specifies which modules and location the component manages
 import com.example.rxjavaapp.data.remote.PostsService;
-import com.example.rxjavaapp.view.MainActivity;
 import com.example.rxjavaapp.viewmodel.ListViewModel;
 
 

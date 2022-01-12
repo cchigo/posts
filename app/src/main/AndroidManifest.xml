@@ -12,17 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RxJavaApp">
         <activity
-            android:name=".view.FavoriteListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".view.MainActivity"
-            android:exported="true">
+            android:name=".PostsActivity"
+            android:exported="true"
+            android:label="@string/title_activity_posts"
+            android:theme="@style/Theme.RxJavaApp.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".view.FavoriteListActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

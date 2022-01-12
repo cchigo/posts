@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.rxjavaapp.data.local.AppDBHelperImpl;
 import com.example.rxjavaapp.data.local.AppDatabase;
 import com.example.rxjavaapp.data.local.Post;
+import com.example.rxjavaapp.data.local.PostItem;
 import com.example.rxjavaapp.data.local.PostsDAO;
 import com.example.rxjavaapp.di.DaggerApiComponent;
 import com.example.rxjavaapp.model.PostModel;
@@ -21,26 +22,23 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import io.reactivex.Completable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.observers.DisposableCompletableObserver;
 import io.reactivex.rxjava3.observers.DisposableSingleObserver;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 public class ListViewModel extends AndroidViewModel {
+ //   private PostsRepository postsRepository;
+    public MutableLiveData<Map<String, ArrayList<PostModel>>> _posts = new MutableLiveData();
+    public LiveData<Map<String, ArrayList<PostModel>>> posts = _posts;
 
-    public MutableLiveData<Map<String, ArrayList<PostModel>>> _countries = new MutableLiveData();
-    public LiveData<Map<String, ArrayList<PostModel>>> countries = _countries;
+    public MutableLiveData<List<Post>> _userPosts = new MutableLiveData();
+    public LiveData<List<Post>> userPosts = _userPosts;
 
-    public MutableLiveData<List<Post>> _postWithFavourite = new MutableLiveData();
-    public LiveData<List<Post>> postWithFavourite = _postWithFavourite;
-
-    public MutableLiveData<Boolean> countryLoadError = new MutableLiveData<Boolean>();
+    public MutableLiveData<Boolean> loadingError = new MutableLiveData<Boolean>();
     public MutableLiveData<Boolean> loading = new MutableLiveData<Boolean>();
 
     Application application;
@@ -49,13 +47,17 @@ public class ListViewModel extends AndroidViewModel {
     AppDBHelperImpl appDBHelper;
 
 
+
+
     @Inject
     public PostsService postsService;
 
     public ListViewModel(Application application) {
         super(application);
         this.application = application;
+
         appDatabase = AppDatabase.getInstance(application);
+    //    postsRepository=new PostsRepository(application);
         postsDAO = appDatabase.getPostsDAO();
         appDBHelper = new AppDBHelperImpl(postsDAO);
         DaggerApiComponent.create().inject(this);
@@ -91,8 +93,8 @@ public class ListViewModel extends AndroidViewModel {
                         .subscribeWith(new DisposableSingleObserver<List<PostModel>>() {
                             @Override
                             public void onSuccess(List<PostModel> postModel) {
-                                _countries.setValue(groupedList(postModel));
-                                countryLoadError.setValue(false);
+                                _posts.setValue(groupedList(postModel));
+                                loadingError.setValue(false);
                                 loading.setValue(false);
                                 List<Post> copy = new ArrayList();
                                 for (PostModel post : postModel) {
@@ -100,15 +102,17 @@ public class ListViewModel extends AndroidViewModel {
                                             post.getUserId(),
                                             post.getId(),
                                             post.getTitle(),
-                                            post.getBody()));
+                                            post.getBody(),
+                                            false
+                                            )
+                                    );
                                 }
-
                                 saveToLocalDb(copy);
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                countryLoadError.setValue(false);
+                                loadingError.setValue(false);
                                 loading.setValue(false);
                                 e.printStackTrace();
                             }
@@ -118,15 +122,18 @@ public class ListViewModel extends AndroidViewModel {
     }
 
     private void saveToLocalDb(List<Post> posts) {
-
+// check if room db is null; before using the values
         Completable.fromRunnable(new Runnable() {
             @Override
             public void run() {
                 appDBHelper.insertAllPosts(posts);
             }
         })
-                .subscribeOn(io.reactivex.schedulers.Schedulers.io())
+                .subscribeOn(Schedulers.io())
                 .subscribe();
+    }
+    public void openPost(PostItem postItem){
+
     }
 
     private void addToFavouriteDB() {
