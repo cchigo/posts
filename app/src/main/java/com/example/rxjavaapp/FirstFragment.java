@@ -19,6 +19,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashMap;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 
@@ -39,7 +41,6 @@ public class FirstFragment extends Fragment {
         listViewModel = new ViewModelProvider(requireActivity()).get(ListViewModel.class);
 
         adapter = new PostsAdapter(new HashMap<>(), item -> {
-            listViewModel._userPosts.setValue(item);
             NavHostFragment.findNavController(FirstFragment.this)
                    .navigate(R.id.action_FirstFragment_to_SecondFragment);
 
@@ -53,6 +54,7 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
 //        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -60,7 +62,7 @@ public class FirstFragment extends Fragment {
 //                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
 //            }
 //        });
-        listViewModel.refresh();
+   //     listViewModel.refresh();
 
         binding.postRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.postRecyclerView.setAdapter(adapter);
@@ -70,10 +72,9 @@ public class FirstFragment extends Fragment {
             binding.swipeRefreshLayout.setRefreshing(false);
         });
 
-        observerViewModel();
+        observerViewModel2();
     }
-
-    private void observerViewModel() {
+    private void observerViewModel2() {
         listViewModel.posts.observe(getViewLifecycleOwner(), countryModels -> {
             if (countryModels != null) {
                 binding.postRecyclerView.setVisibility(View.VISIBLE);
@@ -95,6 +96,29 @@ public class FirstFragment extends Fragment {
             }
         });
     }
+
+//    private void observerViewModel() {
+//        listViewModel.posts.observe(getViewLifecycleOwner(), postModels -> {
+//            if (postModels != null) {
+//                binding.postRecyclerView.setVisibility(View.VISIBLE);
+//                adapter.updateCountries(postModels);
+//            }
+//        });
+//        listViewModel.loadingError.observe(getViewLifecycleOwner(), isError -> {
+//            if (isError != null) {
+//                binding.listError.setVisibility(isError ? View.VISIBLE : View.GONE);
+//            }
+//        });
+//        listViewModel.loading.observe(getViewLifecycleOwner(), isLoading -> {
+//            if (isLoading != null) {
+//                binding.progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+//                if (isLoading) {
+//                    binding.listError.setVisibility(View.GONE);
+//                    binding.postRecyclerView.setVisibility(View.GONE);
+//                }
+//            }
+//        });
+//    }
 
     @Override
     public void onDestroyView() {

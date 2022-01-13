@@ -6,17 +6,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.rxjavaapp.data.local.Post;
+import com.example.rxjavaapp.data.local.PostEntity;
 import com.example.rxjavaapp.databinding.UserPostsItemBinding;
-import com.example.rxjavaapp.model.PostModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.UserPostsViewHolder> {
-    private ArrayList<PostModel> postItem;
+    private ArrayList<PostEntity> postItem;
 
-    public UserPostAdapter(ArrayList<PostModel> postItem) {
+    public UserPostAdapter(ArrayList<PostEntity> postItem) {
         this.postItem = postItem;
     }
 
@@ -31,13 +29,13 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.UserPo
 
         }
 
-        void bind(PostModel postModel) {
-           userPostItemBinding.userIdText.setText(postModel.getUserId());
-            userPostItemBinding.postTitleText.setText(postModel.getTitle());
-            userPostItemBinding.postBodyText.setText(postModel.getBody());
-            userPostItemBinding.postItemLayout.setOnClickListener(v -> {
-             //   listener.onItemClick(postItem);
-            });
+        void bind(PostEntity postModel) {
+//           userPostItemBinding.userIdText.setText(postModel.getUserId());
+//            userPostItemBinding.postTitleText.setText(postModel.getTitle());
+//            userPostItemBinding.postBodyText.setText(postModel.getBody());
+//            userPostItemBinding.postItemLayout.setOnClickListener(v -> {
+//             //   listener.onItemClick(postItem);
+//            });
         }
     }
 
@@ -50,7 +48,7 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.UserPo
 
     @Override
     public void onBindViewHolder(@NonNull UserPostsViewHolder holder, int position) {
-     PostModel post = postItem.get(position);
+     PostEntity post = postItem.get(position);
         holder.bind(post);
     }
 

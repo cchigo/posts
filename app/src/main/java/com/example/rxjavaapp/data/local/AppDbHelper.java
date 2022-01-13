@@ -7,14 +7,14 @@ import io.reactivex.rxjava3.core.Flowable;
 
 public interface AppDbHelper {
 
-    public  void insertAllPosts(List<Post> post);
+    public  void insertAllPosts(List<PostEntity> post);
 
-    public  void insertPost(Post post);
+    public  void insertPost(PostEntity post);
 
-    public  void deletePost(Post post);
+    public  void deletePost(PostEntity post);
 
-    public Flowable<List<Post>> getPostsFromLocal();
+    public Flowable<List<PostEntity>> getPostsFromLocal();
 
-    public  void updatePost(Post post);
+    public  void updatePost(PostEntity post);
 
 }

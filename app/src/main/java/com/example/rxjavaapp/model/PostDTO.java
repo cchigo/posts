@@ -2,7 +2,11 @@ package com.example.rxjavaapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class PostModel {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+public class PostDTO {
     @SerializedName("userId")
     String userId;
     @SerializedName("id")
@@ -12,7 +16,7 @@ public class PostModel {
     @SerializedName("body")
      String body;
 
-    public PostModel(String userId, String id, String title, String body) {
+    public PostDTO(String userId, String id, String title, String body) {
         this.userId = userId;
         this.id = id;
         this.title = title;

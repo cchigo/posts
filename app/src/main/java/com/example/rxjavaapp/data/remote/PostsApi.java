@@ -1,6 +1,7 @@
 package com.example.rxjavaapp.data.remote;
 
-import com.example.rxjavaapp.model.PostModel;
+import com.example.rxjavaapp.data.local.PostEntity;
+import com.example.rxjavaapp.model.PostDTO;
 
 import java.util.List;
 
@@ -10,8 +11,5 @@ import retrofit2.http.GET;
 public interface PostsApi {
 
     @GET("posts")
-    Single<List<PostModel>> getPosts();
-
-    @GET("posts")
-    Single<Object> getPosts2();
+    Single<List<PostDTO>> getPosts();
 }

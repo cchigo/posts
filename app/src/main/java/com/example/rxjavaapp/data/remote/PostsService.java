@@ -1,6 +1,5 @@
 package com.example.rxjavaapp.data.remote;
-import com.example.rxjavaapp.di.DaggerApiComponent;
-import com.example.rxjavaapp.model.PostModel;
+import com.example.rxjavaapp.model.PostDTO;
 
 import java.util.List;
 
@@ -10,23 +9,13 @@ import io.reactivex.rxjava3.core.Single;
 
 public class PostsService {
 
-    private static PostsService instance;
-
-    @Inject
     public PostsApi api;
 
-    private PostsService() {
-        DaggerApiComponent.create().inject(this);
+    public @Inject PostsService(PostsApi api) {
+        this.api = api;
     }
 
-    public static PostsService getInstance() {
-        if (instance == null) {
-            instance = new PostsService();
-        }
-        return instance;
-    }
-
-    public Single<List<PostModel>> getAllPosts() {
+    public Single<List<PostDTO>> getAllPosts() {
         return api.getPosts();
     }
 
