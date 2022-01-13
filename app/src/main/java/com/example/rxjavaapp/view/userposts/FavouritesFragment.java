@@ -41,39 +41,10 @@ public class FavouritesFragment extends Fragment {
         listViewModel = new ViewModelProvider(requireActivity()).get(ListViewModel.class);
 
         listViewModel.getFavouritePost(true);
-        Log.d("FAVOURITE_TAG_", "onViewCreated: "+ listViewModel._favouritePosts.getValue());
-
-
         return binding.getRoot();
     }
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        listViewModel._favouritePosts.observe(getViewLifecycleOwner(), countryModels -> {
-            if (countryModels != null) {
-
-
-                Log.d("FAVOURITE_TAG", "onViewCreated: "+ countryModels.toString());
-
-//                binding.favouritePostsRv.setVisibility(View.VISIBLE);
-//                adapter = new PostsAdapter(new HashMap<>(), new OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(String userId) {
-//                        listViewModel.getPostsByUserId(userId);
-//                        NavHostFragment.findNavController(FavouritesFragment.this)
-//                                .navigate(R.id.action_favouritesFragment_to_SecondFragment);
-//                    }
-//
-//                    @Override
-//                    public void onFavouriteClick(Post post) {
-//                        listViewModel.setFavouritePost(post);
-//                    }
-//                });
-            }
-        });
-
-
-
-
     }
 
     @Override
