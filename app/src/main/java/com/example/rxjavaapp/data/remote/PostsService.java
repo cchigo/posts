@@ -1,5 +1,4 @@
 package com.example.rxjavaapp.data.remote;
-import com.example.rxjavaapp.model.PostDTO;
 
 import java.util.List;
 

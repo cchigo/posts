@@ -1,7 +1,7 @@
 package com.example.rxjavaapp.data.repository;
 
 import com.example.rxjavaapp.data.local.PostEntity;
-import com.example.rxjavaapp.model.PostDTO;
+import com.example.rxjavaapp.data.remote.PostDTO;
 
 import java.util.List;
 
@@ -17,5 +17,9 @@ public interface Repository {
     void saveLocalData(List<PostEntity> posts);
 
     Flowable<List<PostEntity>> getPostByUserId(String userId);
+
+    Flowable<List<PostEntity>> getFavouritePosts(Boolean isFavourite);
+
+    void setFavourite(PostEntity postEntity);
 
 }

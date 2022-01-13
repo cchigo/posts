@@ -27,11 +27,12 @@ public class PostEntity {
     @ColumnInfo(name="is_favourite")
     Boolean isFavourite;
 
-    public PostEntity(String userId, @NonNull String id, String title, String body) {
+    public PostEntity(String userId, @NonNull String id, String title, String body, Boolean isFavourite) {
         this.userId = userId;
         this.id = id;
         this.title = title;
         this.body = body;
+        this.isFavourite = isFavourite;
     }
 
     public String getUserId() {
@@ -67,4 +68,11 @@ public class PostEntity {
         this.body = body;
     }
 
+    public Boolean getFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(Boolean favourite) {
+        isFavourite = favourite;
+    }
 }

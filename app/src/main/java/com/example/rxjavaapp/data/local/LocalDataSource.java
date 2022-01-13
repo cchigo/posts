@@ -17,6 +17,13 @@ public class LocalDataSource {
     public Flowable<List<PostEntity>> getPostsByUserId(String userId) {
         return database.getPostsDAO().getPostsByUserId(userId);
     }
+    public Flowable<List<PostEntity>> getFavouritePosts(Boolean isFavourite) {
+        return database.getPostsDAO().getFavourites(isFavourite);
+    }
+    public void setFavourite(PostEntity postEntity) {
+        database.getPostsDAO().updateFavourite(postEntity);
+    }
+
     public void savePosts(List<PostEntity> posts){
        database.getPostsDAO().insertAll(posts);
     }

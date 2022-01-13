@@ -33,7 +33,7 @@ public class UserPostFragment extends Fragment {
         binding = FragmentSecondBinding.inflate(inflater, container, false);
         listViewModel = new ViewModelProvider(requireActivity()).get(ListViewModel.class);
         List<Post> postItem = listViewModel.userPosts.getValue();
-        Log.d("SECOND_TAG", "onCreateView: " + postItem.toString());
+
         adapter = new UserPostAdapter(postItem);
         return binding.getRoot();
     }

@@ -26,7 +26,7 @@ public interface PostsDAO {
     public void addFavouritePost(PostEntity post);
 
     @Update
-    public void changeFavourite(PostEntity post);
+    public void updateFavourite(PostEntity post);
 
 
     @Query("select * from posts")
@@ -34,5 +34,8 @@ public interface PostsDAO {
 
     @Query("select * from posts where userId ==:userId")
     Flowable <List<PostEntity>> getPostsByUserId(String userId);
+
+    @Query("select * from posts where is_favourite =:isFavourite")
+    Flowable <List<PostEntity>> getFavourites(Boolean isFavourite);
 
 }

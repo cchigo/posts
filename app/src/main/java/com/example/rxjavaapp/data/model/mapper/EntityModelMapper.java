@@ -15,7 +15,8 @@ public class EntityModelMapper implements BaseModelMapper<Post, PostEntity> {
                 data.getUserId(),
                 data.getId(),
                 data.getTitle(),
-                data.getBody());
+                data.getBody(),
+                data.getFavourite());
     }
 
     @Override
@@ -23,7 +24,9 @@ public class EntityModelMapper implements BaseModelMapper<Post, PostEntity> {
         return new PostEntity(data.getUserId(),
                 data.getId(),
                 data.getTitle(),
-                data.getBody());
+                data.getBody(),
+                false);
+
     }
     public List<Post> fromList(List<PostEntity> data){
         List<Post> result = new ArrayList();

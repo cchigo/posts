@@ -1,6 +1,6 @@
 package com.example.rxjavaapp.data.model.mapper;
 import com.example.rxjavaapp.data.local.Post;
-import com.example.rxjavaapp.model.PostDTO;
+import com.example.rxjavaapp.data.remote.PostDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,8 @@ public class DTOModelMapper implements BaseModelMapper<Post, PostDTO>{
                 data.getUserId(),
                 data.getId(),
                 data.getTitle(),
-                data.getBody());
+                data.getBody(),
+                false);
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.rxjavaapp.R;
 import com.example.rxjavaapp.data.local.Post;
 import com.example.rxjavaapp.databinding.PostItemBinding;
 
@@ -16,6 +17,8 @@ import java.util.Map;
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHolder> {
     private Map<String, ArrayList<Post>> posts;
     private final OnItemClickListener listener;
+    //private final OnFavouriteListener favouriteListener;
+
     public PostsAdapter(Map<String, ArrayList<Post>> posts, OnItemClickListener listener) {
         this.posts = posts;
         this.listener = listener;
@@ -39,10 +42,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHol
             postItemBinding.postItemLayout.setOnClickListener(v -> {
                 listener.onItemClick(postModel.getUserId());
             });
-//            postItemBinding.favBtn.setOnClickListener(v -> {
-//                postItem.setSelected(true);
-//                postItemBinding.favBtn.setImageResource(R.drawable.ic_baseline_favorite_24);
-//            });
+            postItemBinding.favBtn.setOnClickListener(v -> {
+               listener.onFavouriteClick(postModel);
+               postItemBinding.favBtn.setImageResource(R.drawable.ic_baseline_favorite_24);
+           });
 
         }
     }

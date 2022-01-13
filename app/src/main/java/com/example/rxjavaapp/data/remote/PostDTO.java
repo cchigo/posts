@@ -1,4 +1,4 @@
-package com.example.rxjavaapp.model;
+package com.example.rxjavaapp.data.remote;
 
 import com.google.gson.annotations.SerializedName;
 
