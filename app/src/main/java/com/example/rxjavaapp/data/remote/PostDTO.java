@@ -1,8 +1,8 @@
-package com.example.rxjavaapp.model;
+package com.example.rxjavaapp.data.remote;
 
 import com.google.gson.annotations.SerializedName;
 
-public class PostModel {
+public class PostDTO {
     @SerializedName("userId")
     String userId;
     @SerializedName("id")
@@ -12,7 +12,7 @@ public class PostModel {
     @SerializedName("body")
      String body;
 
-    public PostModel(String userId, String id, String title, String body) {
+    public PostDTO(String userId, String id, String title, String body) {
         this.userId = userId;
         this.id = id;
         this.title = title;

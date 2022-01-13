@@ -11,14 +11,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.example.rxjavaapp.data.local.Post;
 import com.example.rxjavaapp.databinding.FragmentFirstBinding;
 import com.example.rxjavaapp.view.OnItemClickListener;
 import com.example.rxjavaapp.view.PostsAdapter;
+import com.example.rxjavaapp.view.userposts.FavouritesFragment;
 import com.example.rxjavaapp.viewmodel.ListViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashMap;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
 
@@ -38,13 +43,23 @@ public class FirstFragment extends Fragment {
         binding = FragmentFirstBinding.inflate(inflater, container, false);
         listViewModel = new ViewModelProvider(requireActivity()).get(ListViewModel.class);
 
-        adapter = new PostsAdapter(new HashMap<>(), item -> {
-            listViewModel._userPosts.setValue(item);
-            NavHostFragment.findNavController(FirstFragment.this)
-                   .navigate(R.id.action_FirstFragment_to_SecondFragment);
+        adapter = new PostsAdapter(new HashMap<>(), new OnItemClickListener() {
+            @Override
+            public void onItemClick(String userId) {
+                listViewModel.getPostsByUserId(userId);
+                NavHostFragment.findNavController(FirstFragment.this)
+                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+            }
 
+            @Override
+            public void onFavouriteClick(Post post) {
+                listViewModel.setFavouritePost(post);
+            }
         });
-
+        binding.favbtn.setOnClickListener(v -> {
+            NavHostFragment.findNavController(FirstFragment.this)
+                    .navigate(R.id.action_FirstFragment_to_favouritesFragment);
+        });
 
         return binding.getRoot();
 
@@ -52,15 +67,6 @@ public class FirstFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-//        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                NavHostFragment.findNavController(FirstFragment.this)
-//                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
-//            }
-//        });
-        listViewModel.refresh();
 
         binding.postRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.postRecyclerView.setAdapter(adapter);
@@ -70,10 +76,10 @@ public class FirstFragment extends Fragment {
             binding.swipeRefreshLayout.setRefreshing(false);
         });
 
-        observerViewModel();
+        observerViewModel2();
     }
 
-    private void observerViewModel() {
+    private void observerViewModel2() {
         listViewModel.posts.observe(getViewLifecycleOwner(), countryModels -> {
             if (countryModels != null) {
                 binding.postRecyclerView.setVisibility(View.VISIBLE);

@@ -7,19 +7,23 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.rxjavaapp.R;
+import com.example.rxjavaapp.data.local.Post;
 import com.example.rxjavaapp.databinding.PostItemBinding;
-import com.example.rxjavaapp.model.PostModel;
+
 
 import java.util.ArrayList;
 import java.util.Map;
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHolder> {
-    private Map<String, ArrayList<PostModel>> posts;
+    private Map<String, ArrayList<Post>> posts;
     private final OnItemClickListener listener;
-    public PostsAdapter(Map<String, ArrayList<PostModel>> posts, OnItemClickListener listener) {
+    //private final OnFavouriteListener favouriteListener;
+
+    public PostsAdapter(Map<String, ArrayList<Post>> posts, OnItemClickListener listener) {
         this.posts = posts;
         this.listener = listener;
     }
-    public void updateCountries(Map<String, ArrayList<PostModel>> postsList) {
+    public void updateCountries(Map<String, ArrayList<Post>> postsList) {
         posts = postsList;
     }
     class PostsViewHolder extends RecyclerView.ViewHolder {
@@ -28,20 +32,20 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHol
             super(binding.getRoot());
             postItemBinding = binding;
         }
-        void bind(ArrayList<PostModel> postModels) {
-            PostModel postModel = postModels.get(postModels.size() - 1);
+        void bind(ArrayList<Post> postModels) {
+            Post postModel = postModels.get(postModels.size() - 1);
             int totalPosts = postModels.size();
             postItemBinding.userIdText.setText(postModel.getUserId());
             postItemBinding.postTitleText.setText(postModel.getTitle());
             postItemBinding.postBodyText.setText(postModel.getBody());
             postItemBinding.postCountText.setText(String.valueOf(totalPosts));
             postItemBinding.postItemLayout.setOnClickListener(v -> {
-                listener.onItemClick(postModels);
+                listener.onItemClick(postModel.getUserId());
             });
-//            postItemBinding.favBtn.setOnClickListener(v -> {
-//                postItem.setSelected(true);
-//                postItemBinding.favBtn.setImageResource(R.drawable.ic_baseline_favorite_24);
-//            });
+            postItemBinding.favBtn.setOnClickListener(v -> {
+               listener.onFavouriteClick(postModel);
+               postItemBinding.favBtn.setImageResource(R.drawable.ic_baseline_favorite_24);
+           });
 
         }
     }
@@ -52,7 +56,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHol
     }
     @Override
     public void onBindViewHolder(@NonNull PostsViewHolder holder, int position) {
-        ArrayList<PostModel> list = (ArrayList<PostModel>) posts.values().toArray()[position];
+        ArrayList<Post> list = (ArrayList<Post>) posts.values().toArray()[position];
         holder.bind(list);
     }
     @Override

@@ -7,8 +7,6 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.rxjavaapp.model.PostModel;
-
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Flowable;
@@ -18,28 +16,26 @@ import io.reactivex.rxjava3.core.Flowable;
 public interface PostsDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void insertAll(List<Post> posts);
+    public void insertAll(List<PostEntity> posts);
 
 
     @Delete
-    public void deletePost(Post post);
+    public void deletePost(PostEntity post);
 
     @Delete
-    public void addFavouritePost(Post post);
+    public void addFavouritePost(PostEntity post);
 
     @Update
-    public void changeFavourite(Post post);
+    public void updateFavourite(PostEntity post);
 
 
     @Query("select * from posts")
-    Flowable <List<Post>> getAllPosts();
-//where is fav == true
-    //pass in somrthing different
-    //pass in hasmap to adapter to reuse;
+    Flowable <List<PostEntity>> getAllPosts();
 
-//    @Query("select * from contacts")
-//    public List<Contact> getContacts();
-//
-//    @Query("select * from contacts where contact_id ==:contactId")
-//    public Contact getContact(long contactId);
+    @Query("select * from posts where userId ==:userId")
+    Flowable <List<PostEntity>> getPostsByUserId(String userId);
+
+    @Query("select * from posts where is_favourite =:isFavourite")
+    Flowable <List<PostEntity>> getFavourites(Boolean isFavourite);
+
 }

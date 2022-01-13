@@ -1,11 +1,5 @@
 package com.example.rxjavaapp.data.local;
 
-import androidx.annotation.Keep;
-
-import com.example.rxjavaapp.model.PostModel;
-
-import java.util.List;
-
 
 //public class PostItem {
 //     private List<PostModel> posts;

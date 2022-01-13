@@ -7,31 +7,27 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rxjavaapp.data.local.Post;
+import com.example.rxjavaapp.data.local.PostEntity;
 import com.example.rxjavaapp.databinding.UserPostsItemBinding;
-import com.example.rxjavaapp.model.PostModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.UserPostsViewHolder> {
-    private ArrayList<PostModel> postItem;
+    private List<Post> postItem;
 
-    public UserPostAdapter(ArrayList<PostModel> postItem) {
+    public UserPostAdapter(List<Post> postItem) {
         this.postItem = postItem;
     }
-
     class UserPostsViewHolder extends RecyclerView.ViewHolder {
 
         private UserPostsItemBinding userPostItemBinding;
 
         public UserPostsViewHolder(UserPostsItemBinding binding) {
-
             super(binding.getRoot());
             userPostItemBinding = binding;
-
         }
-
-        void bind(PostModel postModel) {
+        void bind(Post postModel) {
            userPostItemBinding.userIdText.setText(postModel.getUserId());
             userPostItemBinding.postTitleText.setText(postModel.getTitle());
             userPostItemBinding.postBodyText.setText(postModel.getBody());
@@ -50,11 +46,9 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.UserPo
 
     @Override
     public void onBindViewHolder(@NonNull UserPostsViewHolder holder, int position) {
-     PostModel post = postItem.get(position);
+     Post post = postItem.get(position);
         holder.bind(post);
     }
-
-
 
     @Override
     public int getItemCount() {

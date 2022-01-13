@@ -1,20 +1,33 @@
 package com.example.rxjavaapp.data.local;
 
-import com.google.gson.annotations.SerializedName;
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-public class Post {
-    @SerializedName("userId")
-    String userId;
-    @SerializedName("id")
+
+
+@Entity(tableName = "posts")
+public class PostEntity {
+
+    @NonNull
+    @PrimaryKey
+    @ColumnInfo(name="id")
     String id;
-    @SerializedName("title")
+
+    @ColumnInfo(name="userId")
+    String userId;
+
+    @ColumnInfo(name="title")
     String title;
-    @SerializedName("body")
+
+    @ColumnInfo(name="body")
     String body;
-    @SerializedName("is_favourite")
+
+    @ColumnInfo(name="is_favourite")
     Boolean isFavourite;
 
-    public Post(String userId, String id, String title, String body, Boolean isFavourite) {
+    public PostEntity(String userId, @NonNull String id, String title, String body, Boolean isFavourite) {
         this.userId = userId;
         this.id = id;
         this.title = title;
@@ -30,11 +43,12 @@ public class Post {
         this.userId = userId;
     }
 
+    @androidx.annotation.NonNull
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(@androidx.annotation.NonNull String id) {
         this.id = id;
     }
 
