@@ -37,7 +37,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHol
             postItemBinding.postBodyText.setText(postModel.getBody());
             postItemBinding.postCountText.setText(String.valueOf(totalPosts));
             postItemBinding.postItemLayout.setOnClickListener(v -> {
-                listener.onItemClick(postModels);
+                listener.onItemClick(postModel.getUserId());
             });
 //            postItemBinding.favBtn.setOnClickListener(v -> {
 //                postItem.setSelected(true);

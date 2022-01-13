@@ -1,41 +1,37 @@
 package com.example.rxjavaapp.data.local;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 
 @Entity(tableName = "posts")
 public class PostEntity {
-    @ColumnInfo(name="post_id")
-    @PrimaryKey(autoGenerate =true)
-    private long post_id;
-    @ColumnInfo(name="userId")
-    String userId;
+
+    @NonNull
+    @PrimaryKey
     @ColumnInfo(name="id")
     String id;
+
+    @ColumnInfo(name="userId")
+    String userId;
+
     @ColumnInfo(name="title")
     String title;
+
     @ColumnInfo(name="body")
     String body;
 
-    public PostEntity( String userId, String id, String title, String body) {
+    @ColumnInfo(name="is_favourite")
+    Boolean isFavourite;
+
+    public PostEntity(String userId, @NonNull String id, String title, String body) {
         this.userId = userId;
         this.id = id;
         this.title = title;
         this.body = body;
-    }
-
-    public long getPost_id() {
-        return post_id;
-    }
-
-    public void setPost_id(long post_id) {
-        this.post_id = post_id;
     }
 
     public String getUserId() {
@@ -46,11 +42,12 @@ public class PostEntity {
         this.userId = userId;
     }
 
+    @androidx.annotation.NonNull
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(@androidx.annotation.NonNull String id) {
         this.id = id;
     }
 

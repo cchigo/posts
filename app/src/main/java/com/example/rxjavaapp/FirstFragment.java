@@ -41,6 +41,7 @@ public class FirstFragment extends Fragment {
         listViewModel = new ViewModelProvider(requireActivity()).get(ListViewModel.class);
 
         adapter = new PostsAdapter(new HashMap<>(), item -> {
+            listViewModel.getPostsByUserId(item);
             NavHostFragment.findNavController(FirstFragment.this)
                    .navigate(R.id.action_FirstFragment_to_SecondFragment);
 

@@ -7,5 +7,5 @@ import com.example.rxjavaapp.model.PostDTO;
 import java.util.ArrayList;
 
 public interface OnItemClickListener {
-    void onItemClick(ArrayList<Post> item);
+    void onItemClick(String userId);
 }

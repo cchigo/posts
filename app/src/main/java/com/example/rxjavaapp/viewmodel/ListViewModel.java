@@ -1,5 +1,7 @@
 package com.example.rxjavaapp.viewmodel;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -30,16 +32,14 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 @HiltViewModel
 public class ListViewModel extends ViewModel {
-    //   private PostsRepository postsRepository;
     public MutableLiveData<Map<String, ArrayList<Post>>> _posts = new MutableLiveData();
     public LiveData<Map<String, ArrayList<Post>>> posts = _posts;
 
-    public MutableLiveData<ArrayList<PostDTO>> _userPosts = new MutableLiveData();
-    public LiveData<ArrayList<PostDTO>> userPosts = _userPosts;
+    public MutableLiveData<List<Post>> _userPosts = new MutableLiveData();
+    public LiveData<List<Post>> userPosts = _userPosts;
 
     public MutableLiveData<Boolean> loadingError = new MutableLiveData<Boolean>();
     public MutableLiveData<Boolean> loading = new MutableLiveData<Boolean>();
-
 
     private DataRepository dataRepository;
     private EntityModelMapper localMapper;
@@ -93,6 +93,25 @@ public class ListViewModel extends ViewModel {
                       }
               ));
     }
+    public void getPostsByUserId(String userId){
+        disposable.add(
+                dataRepository.getPostByUserId(userId)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe(p ->  loading.setValue(true))
+                        .subscribe(
+                                result -> {
+                                    Log.d("GET_POST_BY_USER_TAG", "getPostsByUserId: "+ result);
+                                    loading.setValue(false);
+                                    _userPosts.setValue( localMapper.fromList(result));
+                                    },
+                                error -> {
+                                    loading.setValue(false);
+                                }
+                        )
+
+        );
+    }
 
     private Map<String, ArrayList<Post>> groupedList(List<Post> posts) {
         Map<String, ArrayList<Post>> hashmap = new HashMap<>();
@@ -145,7 +164,6 @@ public class ListViewModel extends ViewModel {
             @Override
             public void run() throws Exception {
 
-              //  appDBHelper.updatePost(post);
             }
         })
                 .subscribeOn(Schedulers.io())

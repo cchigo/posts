@@ -16,4 +16,6 @@ public interface Repository {
 
     void saveLocalData(List<PostEntity> posts);
 
+    Flowable<List<PostEntity>> getPostByUserId(String userId);
+
 }

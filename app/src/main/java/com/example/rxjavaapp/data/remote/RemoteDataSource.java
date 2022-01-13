@@ -5,10 +5,7 @@ import com.example.rxjavaapp.model.PostDTO;
 
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Single;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import io.reactivex.rxjava3.core.Single;;
 
 public class RemoteDataSource {
     private PostsService postsService;

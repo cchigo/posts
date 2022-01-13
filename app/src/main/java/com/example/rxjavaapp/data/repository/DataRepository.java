@@ -14,9 +14,6 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
 public class DataRepository implements Repository {
     private LocalDataSource localDataSource;
@@ -45,6 +42,10 @@ public class DataRepository implements Repository {
 
     public void saveLocalData(List<PostEntity> posts){
         localDataSource.savePosts(posts);
+    }
+
+    public Flowable<List<PostEntity>> getPostByUserId(String userId) {
+        return localDataSource.getPostsByUserId(userId);
     }
 
 }

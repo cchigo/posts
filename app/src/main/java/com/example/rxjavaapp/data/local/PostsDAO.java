@@ -32,16 +32,7 @@ public interface PostsDAO {
     @Query("select * from posts")
     Flowable <List<PostEntity>> getAllPosts();
 
-//    @Query("")
-//    Flowable<List<Po>>
+    @Query("select * from posts where userId ==:userId")
+    Flowable <List<PostEntity>> getPostsByUserId(String userId);
 
-//where is fav == true
-    //pass in somrthing different
-    //pass in hasmap to adapter to reuse;
-
-//    @Query("select * from contacts")
-//    public List<Contact> getContacts();
-//
-//    @Query("select * from contacts where contact_id ==:contactId")
-//    public Contact getContact(long contactId);
 }
