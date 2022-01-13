@@ -109,9 +109,7 @@ public class ListViewModel extends ViewModel {
                                 },
                                 error -> {
                                     loading.setValue(false);
-                                }
-                        )
-
+                                })
         );
     }
 

@@ -56,10 +56,10 @@ public class FirstFragment extends Fragment {
                 listViewModel.setFavouritePost(post);
             }
         });
-        binding.favbtn.setOnClickListener(v -> {
-            NavHostFragment.findNavController(FirstFragment.this)
-                    .navigate(R.id.action_FirstFragment_to_favouritesFragment);
-        });
+//        binding.favbtn.setOnClickListener(v -> {
+//            NavHostFragment.findNavController(FirstFragment.this)
+//                    .navigate(R.id.action_FirstFragment_to_favouritesFragment);
+//        });
 
         return binding.getRoot();
 
