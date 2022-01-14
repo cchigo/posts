@@ -21,6 +21,7 @@ import com.example.rxjavaapp.viewmodel.ListViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashMap;
+import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Scheduler;
@@ -50,16 +51,18 @@ public class FirstFragment extends Fragment {
                 NavHostFragment.findNavController(FirstFragment.this)
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
             }
-
             @Override
-            public void onFavouriteClick(Post post) {
-                listViewModel.setFavouritePost(post);
+            public void onFavouriteClick(List<Post> posts) {
+                for (Post post: posts) {
+                    post.setFavourite(true);
+                }
+                listViewModel.setFavouritePost(posts);
             }
         });
-//        binding.favbtn.setOnClickListener(v -> {
-//            NavHostFragment.findNavController(FirstFragment.this)
-//                    .navigate(R.id.action_FirstFragment_to_favouritesFragment);
-//        });
+        binding.favbtn.setOnClickListener(v -> {
+            NavHostFragment.findNavController(FirstFragment.this)
+                    .navigate(R.id.action_FirstFragment_to_favouritesFragment);
+        });
 
         return binding.getRoot();
 

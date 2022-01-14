@@ -51,7 +51,7 @@ public class DataRepository implements Repository {
     }
 
     @Override
-    public void setFavourite(PostEntity postEntity) {
+    public void setFavourite(List<PostEntity> postEntity) {
         localDataSource.setFavourite(postEntity);
     }
 

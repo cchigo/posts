@@ -18,24 +18,16 @@ public interface PostsDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insertAll(List<PostEntity> posts);
 
-
-    @Delete
-    public void deletePost(PostEntity post);
-
-    @Delete
-    public void addFavouritePost(PostEntity post);
-
     @Update
-    public void updateFavourite(PostEntity post);
-
+    public void updateFavourite(List<PostEntity> post);
 
     @Query("select * from posts")
-    Flowable <List<PostEntity>> getAllPosts();
+    Flowable<List<PostEntity>> getAllPosts();
 
     @Query("select * from posts where userId ==:userId")
-    Flowable <List<PostEntity>> getPostsByUserId(String userId);
+    Flowable<List<PostEntity>> getPostsByUserId(String userId);
 
     @Query("select * from posts where is_favourite =:isFavourite")
-    Flowable <List<PostEntity>> getFavourites(Boolean isFavourite);
+    Flowable<List<PostEntity>> getFavourites(Boolean isFavourite);
 
 }

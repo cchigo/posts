@@ -129,11 +129,11 @@ public class ListViewModel extends ViewModel {
                 ));
     }
 
-    public void setFavouritePost(Post post) {
+    public void setFavouritePost(List<Post> post) {
         disposable.add(Completable.fromAction(new Action() {
             @Override
             public void run() throws Exception {
-                dataRepository.setFavourite(localMapper.to(post));
+                dataRepository.setFavourite(localMapper.toList(post));
             }
         })
                 .subscribeOn(Schedulers.io())
@@ -151,7 +151,7 @@ public class ListViewModel extends ViewModel {
                 }));
     }
 
-    private Map<String, ArrayList<Post>> groupedList(List<Post> posts) {
+     public Map<String, ArrayList<Post>> groupedList(List<Post> posts) {
         Map<String, ArrayList<Post>> hashmap = new HashMap<>();
         for (Post post : posts) {
             String key = post.getUserId();
