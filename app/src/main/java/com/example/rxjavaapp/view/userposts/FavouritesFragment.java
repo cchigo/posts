@@ -31,20 +31,31 @@ public class FavouritesFragment extends Fragment {
 
     private FragmentFavouritesBinding binding;
     private ListViewModel listViewModel;
-    private CompositeDisposable disposable = new CompositeDisposable();
     private PostsAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentFavouritesBinding.inflate(inflater, container, false);
-        listViewModel = new ViewModelProvider(requireActivity()).get(ListViewModel.class);
-
-        listViewModel.getFavouritePost(true);
         return binding.getRoot();
     }
+
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        listViewModel = new ViewModelProvider(requireActivity()).get(ListViewModel.class);
+        listViewModel.getFavouritePost(true);
+        adapter = new PostsAdapter(new HashMap<>(), new OnItemClickListener() {
+            @Override
+            public void onItemClick(String userId) {}
+
+            @Override
+            public void onFavouriteClick(List<Post> post) {}
+        });
+        listViewModel.favouritePosts.observe(getViewLifecycleOwner(), favouritePosts -> {
+            adapter.updateCountries(listViewModel.groupedList(favouritePosts));
+        });
+        binding.favouritePostsRv.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.favouritePostsRv.setAdapter(adapter);
     }
 
     @Override

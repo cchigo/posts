@@ -20,6 +20,6 @@ public interface Repository {
 
     Flowable<List<PostEntity>> getFavouritePosts(Boolean isFavourite);
 
-    void setFavourite(PostEntity postEntity);
+    void setFavourite(List<PostEntity> postEntity);
 
 }

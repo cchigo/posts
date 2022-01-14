@@ -25,7 +25,7 @@ public class EntityModelMapper implements BaseModelMapper<Post, PostEntity> {
                 data.getId(),
                 data.getTitle(),
                 data.getBody(),
-                false);
+                data.getFavourite());
 
     }
     public List<Post> fromList(List<PostEntity> data){

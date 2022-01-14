@@ -20,7 +20,7 @@ public class LocalDataSource {
     public Flowable<List<PostEntity>> getFavouritePosts(Boolean isFavourite) {
         return database.getPostsDAO().getFavourites(isFavourite);
     }
-    public void setFavourite(PostEntity postEntity) {
+    public void setFavourite(List<PostEntity> postEntity) {
         database.getPostsDAO().updateFavourite(postEntity);
     }
 
